@@ -29,7 +29,6 @@ public class UserDaoJDBCImpl implements UserDao {
                     ", name VARCHAR(50) NOT NULL" +
                     ", surname VARCHAR(50) NOT NULL" +
                     ", age INT NOT NULL, PRIMARY KEY (id));");
-            statement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -37,7 +36,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void dropUsersTable() {
         try (Statement statement = Util.getStatement();
-             ResultSet resultSet = statement.executeQuery("SHOW TABLES LIKE 'Users'");) {
+             ResultSet resultSet = statement.executeQuery("SHOW TABLES LIKE 'Users'")) {
             if (!resultSet.next() || !resultSet.getString(1).equals("users")) {
                 System.out.println("Таблицы не существует");
                 return;
@@ -50,7 +49,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void saveUser(String name, String lastName, byte age) {
         try (PreparedStatement preparedStatement = Util.getConnection()
-                .prepareStatement("INSERT INTO Users (name, surname, age) values (?, ?, ?)");
+                .prepareStatement("INSERT INTO Users (name, surname, age) values (?, ?, ?)")
         ) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
@@ -76,7 +75,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         try (Statement statement = Util.getStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM Users ");) {
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM Users ")) {
             while (resultSet.next()) {
                 User user = new User(resultSet.getString(2), resultSet.getString(3)
                         , resultSet.getByte(4));
@@ -90,7 +89,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void cleanUsersTable() {
-        try (Statement statement = Util.getStatement();) {
+        try (Statement statement = Util.getStatement()) {
             statement.execute("TRUNCATE TABLE Users;\n");
         } catch (SQLException e) {
             throw new RuntimeException(e);
