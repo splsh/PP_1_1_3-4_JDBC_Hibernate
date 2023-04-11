@@ -21,7 +21,6 @@ public class UserDaoJDBCImpl implements UserDao {
             while (resultSet.next()) {
                 if (resultSet.getString(1).equals("users")) {
                     System.out.println("Таблица уже существует");
-                    resultSet.close();
                     return;
                 }
             }
@@ -90,7 +89,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void cleanUsersTable() {
         try (Statement statement = Util.getStatement()) {
-            statement.execute("TRUNCATE TABLE Users;\n");
+            statement.execute("TRUNCATE TABLE Users;");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -1,6 +1,7 @@
 package jm.task.core.jdbc;
 
-import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
+import jm.task.core.jdbc.service.UserService;
+import jm.task.core.jdbc.service.UserServiceImpl;
 
 import java.sql.*;
 
@@ -20,7 +21,13 @@ public class Main {
 //        userService.cleanUsersTable();
 //        userService.dropUsersTable();
 
-        UserDaoHibernateImpl userDaoHibernate = new UserDaoHibernateImpl();
-        userDaoHibernate.saveUser(name, lastName, age);
+        UserService hibernate = new UserServiceImpl();
+        hibernate.createUsersTable();
+        for (int i = 0; i < 4; i++) {
+            hibernate.saveUser(name, lastName, age);
+        }
+        System.out.println(hibernate.getAllUsers());
+        hibernate.cleanUsersTable();
+        hibernate.dropUsersTable();
     }
 }
