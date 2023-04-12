@@ -30,13 +30,7 @@ public class Util {
 //        return sessionFactory;
 //    }
 
-    /* Я не понял такой момент, получается я всё это конфигурирую перед каждым запросом в базу, а потом закрываю,
-     при этом если каждый раз не закрывать, то закрывать её нужно в конце, при завершении работы программ.
-     Аннотации вроде @After я так понимаю не для этого.
-     Когда я использовал доступ через xml, метод получал через getCurrentSession() сессию, закрывал в конце фабрику,
-     но ему не нужно было передавать весь конфиг каждый раз, для получения новой сессии.
-     С таким же написанием у меня не вышло один раз сконфигурировать и после её вызывать.
-     */
+
     public static SessionFactory getSessionFactory() {
         Configuration configuration = new Configuration();
         Properties properties = new Properties();
@@ -51,7 +45,7 @@ public class Util {
     }
 
 // слишком отстой
-//    public static SessionFactory getSessionFactory() {
+    //    public static SessionFactory getSessionFactory() {
 //        Configuration configuration = new Configuration();
 //        Properties properties = new Properties();
 //        properties.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
@@ -69,8 +63,6 @@ public class Util {
 //        sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 //        return sessionFactory;
 //    }
-
-
     public static Statement getStatement() throws SQLException {
         return Util.getConnection().createStatement();
     }

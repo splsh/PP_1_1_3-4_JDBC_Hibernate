@@ -20,7 +20,7 @@ public class Main {
 //        System.out.println(userService.getAllUsers());
 //        userService.cleanUsersTable();
 //        userService.dropUsersTable();
-
+//
         UserService hibernate = new UserServiceImpl();
         hibernate.createUsersTable();
         for (int i = 0; i < 4; i++) {
